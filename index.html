@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relevé — dossiers du monde</title>
+<meta name="description" content="Revue de presse documentaire du monde entier, synchronisée automatiquement avec les flux d'actualité.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Schibsted+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./" aria-label="Relevé, accueil">Relevé</a>
+  <p class="sync" id="sync" role="status"><span class="dot" aria-hidden="true"></span><span id="sync-text">Chargement…</span></p>
+  <label class="search">
+    <span class="sr">Rechercher dans les titres</span>
+    <input id="q" type="search" placeholder="Rechercher un sujet, un pays, une source" autocomplete="off">
+  </label>
+</header>
+
+<div class="shell">
+  <nav class="rail" aria-label="Régions">
+    <h2 class="rail-title">Régions</h2>
+    <ul id="regions"></ul>
+    <h2 class="rail-title">Affichage</h2>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-feed" aria-selected="true" aria-controls="view-feed">Fil du jour</button>
+      <button role="tab" id="tab-dossiers" aria-selected="false" aria-controls="view-dossiers">Dossiers</button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="view-feed" role="tabpanel" aria-labelledby="tab-feed"></section>
+    <section id="view-dossiers" role="tabpanel" aria-labelledby="tab-dossiers" hidden></section>
+  </main>
+</div>
+
+<footer class="foot">
+  <p>Relevé rassemble titres, extraits et liens publiés par des rédactions tierces. Chaque article appartient à son éditeur : le lien mène à la source.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

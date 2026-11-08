@@ -1,0 +1,33 @@
+name: Synchroniser les actualités
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # toutes les 30 minutes
+  workflow_dispatch:          # lancement manuel depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Récupérer les flux
+        run: node scripts/update-news.mjs
+      - name: Publier les données
+        run: |
+          git config user.name "releve-bot"
+          git config user.email "releve-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || (git commit -m "Synchronisation $(date -u +'%Y-%m-%d %H:%M') UTC" && git push)
+      - name: Vérifier l'état des flux
+        # Après la publication : un flux cassé met cette étape en rouge sans bloquer les données.
+        run: node scripts/check-feeds.mjs --strict
